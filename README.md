@@ -1,1 +1,2 @@
 # CasinoGames
+A casino simulator that currently features a die guessing game. In this very early iteration, the game does not accept user input and is a computer simulation of a die rolling game. In the very near future I plan to add support for user inputted guesses. Continuing past that, I would like to begin an implementation of a Blackjack simulator. Finally, I would like to create a simple GUI for easy user interaction. 
