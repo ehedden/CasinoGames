@@ -2,8 +2,8 @@ package diceRoller;
 
 
 public class CasinoGame {
-	public int playerMoney;
-	public int playerGuess;
+	private int playerMoney;
+	private String playerGuess;
 	diceRoller casinoDice;
 	public int numberTimesPlayed;
 	
@@ -11,18 +11,22 @@ public class CasinoGame {
 	public CasinoGame() {
 		playerMoney = 1000; 
 		
-	GUI.welcomeBox("Welcome to the Casino! The goal of the game is to correctly guess the sum of two die!" +
+	GUI.textPopUp("Welcome to the Casino! The goal of the game is to correctly guess the sum of two die!" +
 	" Each roll costs $20, but if you guess correctly you'll win $40! Good Luck!", "Welcome!");
+	
+	
+	
+	
 		
 		casinoDice = new diceRoller();
 		
 		while(playerMoney > 0) {
+			String playerGuess = GUI.userInput("Insert your guess! Remember, your number can only be between 1 and 12.", "What's your guess?");
+			//TODO: currently breaks if input is not an int, implement checks to ensure number is an int
 			numberTimesPlayed++;
 			playerMoney = playerMoney - 20;
-			casinoDice.roll();
-			playerGuess = (int)(Math.random()*12) + 1;
-			
-			if(casinoDice.getTotal() == playerGuess) {
+			casinoDice.roll();	
+			if(casinoDice.getTotal() == Integer.valueOf(playerGuess)) {
 				playerMoney = playerMoney + 40;
 				System.out.println("Congrats! You Won!");
 				System.out.println("Your guess was: " + playerGuess + "and the roll was: " + casinoDice.getTotal());
