@@ -1,5 +1,6 @@
 package diceRoller;
 
+import java.util.Scanner;
 
 public class CasinoGame {
 	private int playerMoney;
@@ -9,38 +10,32 @@ public class CasinoGame {
 	
 	
 	public CasinoGame() {
-		playerMoney = 1000; 
+		playerMoney = 100; 
 		
 	GUI.textPopUp("Welcome to the Casino! The goal of the game is to correctly guess the sum of two die!" +
 	" Each roll costs $20, but if you guess correctly you'll win $40! Good Luck!", "Welcome!");
-	
-	
-	
-	
 		
 		casinoDice = new diceRoller();
 		
 		while(playerMoney > 0) {
-			String playerGuess = GUI.userInput("Insert your guess! Remember, your number can only be between 1 and 12.", "What's your guess?");
-			//TODO: currently breaks if input is not an int, implement checks to ensure number is an int
+			String playerGuess = GUI.userInput("Insert your guess! Remember, you're trying to guess the sum of two dice!", "What's your guess?");
+			while(!isInteger(playerGuess, 10)) {
+			 playerGuess = GUI.userInput("Your guess must be a number! Try again.", "What's your guess?");
+			}
+
 			numberTimesPlayed++;
 			playerMoney = playerMoney - 20;
 			casinoDice.roll();	
 			if(casinoDice.getTotal() == Integer.valueOf(playerGuess)) {
+				GUI.textPopUp("Congrats! You Won!" + " Your guess was " + playerGuess + ", and the roll was " + casinoDice.getTotal() + ". You now have: " +
+					playerMoney + " dollars."	, "You Won!");
 				playerMoney = playerMoney + 40;
-				System.out.println("Congrats! You Won!");
-				System.out.println("Your guess was: " + playerGuess + "and the roll was: " + casinoDice.getTotal());
-				System.out.println("You now have: " + playerMoney + " dollars");
-				System.out.println("-------------------------------------------------------------");
-				
 			}
 			
 			
 			else {
-				System.out.println("Sorry! You lost!");
-				System.out.println("Your guess was: " + playerGuess + "and the roll was: " + casinoDice.getTotal());
-				System.out.println("You now have: " + playerMoney + " dollars");
-				System.out.println("--------------------------------------------------------------");
+				GUI.textPopUp("Sorry! You lost." + " Your guess was " + playerGuess + ", and the roll was " + casinoDice.getTotal() + ". You now have " +
+						playerMoney + " dollars."	, "Oh no!");
 				
 			}
 			
@@ -49,7 +44,26 @@ public class CasinoGame {
 			
 		}
 		
-		System.out.println("Oh no! You lost all of your money! You played this game " + numberTimesPlayed + " times." );
+		GUI.textPopUp("Oh no! You've spent all of your money! You played this game " + numberTimesPlayed + " times.", "Oh no!");
+	}
+	
+	
+	
+	
+	
+	
+	/** 
+	 * Method to determine if user input is an integer. 
+	 * @param s
+	 * @param radix
+	 * @return
+	 */
+	public static boolean isInteger(String s, int radix) {
+		Scanner sc = new Scanner(s.trim());
+	    if(!sc.hasNextInt(radix)) return false;
+	    sc.nextInt(radix);
+	    return !sc.hasNext();
+		
 	}
 	
 	
